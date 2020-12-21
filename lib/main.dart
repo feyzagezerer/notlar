@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:notlar/utils/database_helper.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    var databaseHelper = DatabaseHelper();
+    databaseHelper.getCategory();
+
+    return MaterialApp(
+        title: "Notlarım",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Text(""));
   }
 }

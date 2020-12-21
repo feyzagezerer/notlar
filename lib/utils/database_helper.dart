@@ -30,10 +30,9 @@ class DatabaseHelper {
     }
   }
 
-  _initializeDatabase() async {
-    Database _db;
+  Future<Database> _initializeDatabase() async {
     var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, "notlar.db");
+    var path = join(databasesPath, "notes.db");
 
 // Check if the database exists
     var exists = await databaseExists(path);
@@ -48,7 +47,7 @@ class DatabaseHelper {
       } catch (_) {}
 
       // Copy from asset
-      ByteData data = await rootBundle.load(join("assets", "notlar.db"));
+      ByteData data = await rootBundle.load(join("assets", "notes.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -58,6 +57,12 @@ class DatabaseHelper {
       print("Opening existing database");
     }
 // open the database
-    _db = await openDatabase(path, readOnly: true);
+    return await openDatabase(path, readOnly: false);
+  }
+
+  Future<List<Map<String, dynamic>>> getCategory() async {
+    var db = await _getDatabase();
+    var result = await db.query("category");
+    return result; //sonuc
   }
 }
