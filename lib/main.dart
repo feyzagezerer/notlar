@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notlar/utils/database_helper.dart';
+import 'package:notlar/home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,15 +8,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var databaseHelper = DatabaseHelper();
-    databaseHelper.getCategory();
-
     return MaterialApp(
-        title: "Notlarım",
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Text(""));
+        title: "Notlarım", debugShowCheckedModeBanner: false, home: NoteList());
   }
 }

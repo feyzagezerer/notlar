@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:notlar/models/category.dart';
+import 'package:notlar/models/note.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -64,5 +66,52 @@ class DatabaseHelper {
     var db = await _getDatabase();
     var result = await db.query("category");
     return result; //sonuc
+  }
+
+  Future<int> addCategory(Category category) async {
+    var db = await _getDatabase();
+    var result = await db.insert("category", category.toMap());
+    return result;
+  }
+
+  Future<int> updateCategory(Category category) async {
+    var db = await _getDatabase();
+    var result = await db.update("category", category.toMap(),
+        where: 'categoryID=?', whereArgs: [category.categoryID]);
+    return result;
+  }
+
+  Future<int> deleteCategory(int categoryID) async {
+    var db = await _getDatabase();
+    var result = await db
+        .delete("category", where: 'categoryID=?', whereArgs: [categoryID]);
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> getNote() async {
+    var db = await _getDatabase();
+    var result = await db.query("note",
+        orderBy: 'noteID DESC'); //en son eklenen not en başta gelsin
+    return result;
+  }
+
+  Future<int> addNote(Note note) async {
+    var db = await _getDatabase();
+    var result = await db.insert("note", note.toMap());
+    return result;
+  }
+
+  Future<int> updateNote(Note note) async {
+    var db = await _getDatabase();
+    var result = await db.update("note", note.toMap(),
+        where: 'noteID=?', whereArgs: [note.noteID]);
+    return result;
+  }
+
+  Future<int> deleteNote(int noteID) async {
+    var db = await _getDatabase();
+    var result =
+        await db.delete("note", where: 'noteID=?', whereArgs: [noteID]);
+    return result;
   }
 }
