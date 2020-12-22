@@ -5,6 +5,7 @@ import 'package:notlar/models/category.dart';
 import 'package:notlar/models/note.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+//import 'package:synchronized/synchronized.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
@@ -68,6 +69,17 @@ class DatabaseHelper {
     return result; //sonuc
   }
 
+  //kategori listesini getir
+  Future<List<Category>> getCategoryList() async {
+    var mapListWhichIncludesCategory =
+        await getCategory(); //kategorileri içeren map listesi
+    var categoryList = List<Category>();
+    for (Map map in mapListWhichIncludesCategory) {
+      categoryList.add(Category.fromMap(map));
+    }
+    return categoryList;
+  }
+
   Future<int> addCategory(Category category) async {
     var db = await _getDatabase();
     var result = await db.insert("category", category.toMap());
@@ -95,6 +107,16 @@ class DatabaseHelper {
     return result;
   }
 
+  //not listesini getir
+  Future<List<Note>> getNoteList() async {
+    var mapListWhichIncludesNote = await getNote(); //notlar map listesi
+    var noteList = List<Note>();
+    for (Map map in mapListWhichIncludesNote) {
+      noteList.add(Note.fromMap(map));
+    }
+    return noteList;
+  }
+
   Future<int> addNote(Note note) async {
     var db = await _getDatabase();
     var result = await db.insert("note", note.toMap());
@@ -113,5 +135,81 @@ class DatabaseHelper {
     var result =
         await db.delete("note", where: 'noteID=?', whereArgs: [noteID]);
     return result;
+  }
+
+  String dateFormat(DateTime tm) {
+    DateTime today = new DateTime.now();
+    Duration oneDay = new Duration(days: 1);
+    Duration twoDay = new Duration(days: 2);
+    Duration oneWeek = new Duration(days: 7);
+    String month;
+    switch (tm.month) {
+      case 1:
+        month = "Ocak";
+        break;
+      case 2:
+        month = "Şubat";
+        break;
+      case 3:
+        month = "Mart";
+        break;
+      case 4:
+        month = "Nisan";
+        break;
+      case 5:
+        month = "Mayıs";
+        break;
+      case 6:
+        month = "Haziran";
+        break;
+      case 7:
+        month = "Temmuz";
+        break;
+      case 8:
+        month = "Ağustos";
+        break;
+      case 9:
+        month = "Eylük";
+        break;
+      case 10:
+        month = "Ekim";
+        break;
+      case 11:
+        month = "Kasım";
+        break;
+      case 12:
+        month = "Aralık";
+        break;
+    }
+
+    Duration difference = today.difference(tm);
+
+    if (difference.compareTo(oneDay) < 1) {
+      return "Bugün";
+    } else if (difference.compareTo(twoDay) < 1) {
+      return "Dün";
+    } else if (difference.compareTo(oneWeek) < 1) {
+      switch (tm.weekday) {
+        case 1:
+          return "Pazartesi";
+        case 2:
+          return "Salı";
+        case 3:
+          return "Çarşamba";
+        case 4:
+          return "Perşembe";
+        case 5:
+          return "Cuma";
+        case 6:
+          return "Cumartesi";
+        case 7:
+          return "Pazar";
+      }
+    } else if (tm.year == today.year) {
+      return '${tm.day} $month';
+    } else {
+      return '${tm.day} $month ${tm.year}';
+    }
+    return "";
   }
 }
