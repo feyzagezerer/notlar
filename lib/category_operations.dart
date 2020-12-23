@@ -168,8 +168,6 @@ class _CategoryOperationsState extends State<CategoryOperations> {
                     validator: (enteredCategorName) {
                       if (enteredCategorName.length < 2) {
                         return "En az 2 karakter giriniz";
-                      } else {
-                        return null;
                       }
                     },
                   ),

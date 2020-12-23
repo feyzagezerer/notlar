@@ -109,9 +109,7 @@ class NoteList extends StatelessWidget {
                     validator: (enteredCategoryName) {
                       if (enteredCategoryName.length < 2) {
                         return "En az 2 karakter giriniz.";
-                      } else {
-                        return null;
-                      } //ISLERI BOZMUYOSA SİL !!!!!!!!!!!
+                      }
                     },
                   ),
                 ),

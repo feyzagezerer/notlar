@@ -102,7 +102,7 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getNote() async {
     var db = await _getDatabase();
-    var result = await db.query("note",
+    var result = await db.query("notes",
         orderBy: 'noteID DESC'); //en son eklenen not en başta gelsin
     return result;
   }
@@ -119,13 +119,13 @@ class DatabaseHelper {
 
   Future<int> addNote(Note note) async {
     var db = await _getDatabase();
-    var result = await db.insert("note", note.toMap());
+    var result = await db.insert("notes", note.toMap());
     return result;
   }
 
   Future<int> updateNote(Note note) async {
     var db = await _getDatabase();
-    var result = await db.update("note", note.toMap(),
+    var result = await db.update("notes", note.toMap(),
         where: 'noteID=?', whereArgs: [note.noteID]);
     return result;
   }
@@ -133,7 +133,7 @@ class DatabaseHelper {
   Future<int> deleteNote(int noteID) async {
     var db = await _getDatabase();
     var result =
-        await db.delete("note", where: 'noteID=?', whereArgs: [noteID]);
+        await db.delete("notes", where: 'noteID=?', whereArgs: [noteID]);
     return result;
   }
 
