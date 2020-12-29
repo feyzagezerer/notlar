@@ -38,6 +38,6 @@ class Note {
 
   @override
   String toString() {
-    return 'Not{noteID: $noteID, categoryID: $noteName, notBaslik: $noteName, noteContent: $noteContent, noteDate: $noteDate, notePriority: $notePriority}';
+    return 'Note{noteID: $noteID, categoryID: $categoryID, noteName: $noteName, noteContent: $noteContent, noteDate: $noteDate, notePriority: $notePriority}';
   }
 }

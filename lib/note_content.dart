@@ -15,9 +15,10 @@ class NoteContent extends StatefulWidget {
 
 class _NoteContentState extends State<NoteContent> {
   var formKey = GlobalKey<FormState>();
-  List<Category> allCategory;
+  List<Category> allCategories;
   DatabaseHelper databaseHelper;
   int categoryID;
+  String categoryName;
   int chosenPriority; //seçilen öncelik
   Category chosenCategory;
   String noteName, noteContent;
@@ -27,12 +28,12 @@ class _NoteContentState extends State<NoteContent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allCategory = List<Category>();
+    allCategories = List<Category>();
     databaseHelper = DatabaseHelper();
     databaseHelper.getCategory().then((mapListWhichIncludesCategory) {
       for (Map readMap in mapListWhichIncludesCategory) {
         //okunan map
-        allCategory.add(Category.fromMap(readMap));
+        allCategories.add(Category.fromMap(readMap));
       }
 
       if (widget.noteToBeEdited != null) {
@@ -41,7 +42,7 @@ class _NoteContentState extends State<NoteContent> {
       } else {
         categoryID = 1;
         chosenPriority = 0;
-        chosenCategory = allCategory[0];
+        chosenCategory = allCategories[1];
         debugPrint(
             "secilen kategoriye deger atandı" + chosenCategory.categoryName);
       }
@@ -61,9 +62,9 @@ class _NoteContentState extends State<NoteContent> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text("Yeni Not"),
+        title: Text(widget.name),
       ),
-      body: allCategory.length <= 0
+      body: allCategories.length <= 0
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -261,7 +262,7 @@ class _NoteContentState extends State<NoteContent> {
   }
 
   List<DropdownMenuItem<Category>> createCategoryItems() {
-    return allCategory.map((mycategory) {
+    return allCategories.map((mycategory) {
       return DropdownMenuItem<Category>(
         value: mycategory,
         child: Text(

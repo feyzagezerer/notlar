@@ -102,8 +102,9 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getNote() async {
     var db = await _getDatabase();
-    var result = await db.query("notes",
-        orderBy: 'noteID DESC'); //en son eklenen not en başta gelsin
+    var result = await db.rawQuery(
+        'select * from notes inner join category on category.categoryID = notes.categoryID order by noteID Desc;');
+    //  orderBy: 'noteID DESC'); //en son eklenen not en başta gelsin
     return result;
   }
 

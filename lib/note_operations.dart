@@ -12,13 +12,16 @@ class NoteOperations extends StatefulWidget {
 
 class _NoteOperationsState extends State<NoteOperations> {
   List<Note> allNotes;
-  DatabaseHelper databaseHelper;
 
+  DatabaseHelper databaseHelper;
+  Future<List<Note>> veri;
   @override
   void initState() {
     super.initState();
     allNotes = List<Note>();
+
     databaseHelper = DatabaseHelper();
+    veri = databaseHelper.getNoteList();
   }
 
   @override
@@ -27,14 +30,14 @@ class _NoteOperationsState extends State<NoteOperations> {
         fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Balsamiq');
 
     return FutureBuilder(
-      future: databaseHelper.getNoteList(),
+      future: veri,
       builder: (context, AsyncSnapshot<List<Note>> snapShot) {
         if (snapShot.connectionState == ConnectionState.done) {
           allNotes = snapShot.data;
           sleep(Duration(milliseconds: 500));
           return ListView.builder(
               itemCount: allNotes.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context, index) {
                 return ExpansionTile(
                   leading: _assignPriorityIcon(
                       allNotes[index].notePriority), //öncelik iconu ata
@@ -169,7 +172,7 @@ class _NoteOperationsState extends State<NoteOperations> {
         context,
         MaterialPageRoute(
             builder: (context) => NoteContent(
-                  name: "Notu Düzenle",
+                  name: "noteToBeEdited",
                   noteToBeEdited: note,
                 )));
   }
