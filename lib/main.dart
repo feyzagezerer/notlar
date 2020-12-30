@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
       title: "Notlarım",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          fontFamily: 'Balsamiq',
-          primarySwatch: Colors.purple,
-          accentColor: Colors.orange),
+        fontFamily: 'Balsamiq',
+        // primarySwatch: Colors.grey,
+        accentColor: Colors.orange,
+      ),
       home: NoteList(),
     );
   }

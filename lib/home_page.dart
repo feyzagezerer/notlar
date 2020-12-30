@@ -12,29 +12,32 @@ class NoteList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      //   backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        //   backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.grey.shade900,
         elevation: 0,
         title: Text(
           "Notlarım",
-          style: TextStyle(fontFamily: "Balsamiq", fontWeight: FontWeight.w600),
+          style: TextStyle(
+              fontFamily: "Balsamiq",
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade200),
         ),
-
         actions: <Widget>[
           PopupMenuButton(
+            color: Colors.grey.shade200,
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
                   child: ListTile(
                     leading: Icon(
-                      Icons.import_contacts,
+                      Icons.category,
                       color: Colors.orange,
                     ),
                     title: Text(
                       "Kategoriler",
                       style: TextStyle(
-                          color: Colors.blueGrey, fontWeight: FontWeight.w700),
+                          color: Colors.orange, fontWeight: FontWeight.w700),
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -85,12 +88,14 @@ class NoteList extends StatelessWidget {
         context: context,
         builder: (context) {
           return SimpleDialog(
+            backgroundColor: Colors.grey.shade300,
             title: Text(
               "Kategori Ekle",
               style: TextStyle(
                   fontFamily: "Balsamiq",
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blueGrey),
+                  fontWeight: FontWeight.w500,
+                  color: Colors.orange,
+                  fontSize: 18),
             ),
             children: <Widget>[
               Form(
@@ -117,23 +122,26 @@ class NoteList extends StatelessWidget {
               ButtonBar(
                 children: <Widget>[
                   OutlineButton(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+                    borderSide: BorderSide(
+                        color: Colors
+                            .grey.shade900), //Theme.of(context).primaryColor),
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    color: Colors.orangeAccent,
+                    color: Colors.grey,
                     child: Text(
                       "Vazgeç",
                       style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                          color: Colors
+                              .redAccent, //Theme.of(context).primaryColor,
                           fontSize: 20,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   OutlineButton(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).accentColor),
+                    borderSide: BorderSide(
+                        color: Colors
+                            .grey.shade900), //Theme.of(context).accentColor),
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         formKey.currentState.save();
@@ -156,9 +164,9 @@ class NoteList extends StatelessWidget {
                     child: Text(
                       "Kaydet",
                       style: TextStyle(
-                          color: Theme.of(context).accentColor,
+                          color: Colors.orange, //Theme.of(context).accentColor,
                           fontSize: 20,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],

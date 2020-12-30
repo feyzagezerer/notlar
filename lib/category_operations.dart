@@ -21,7 +21,10 @@ class _CategoryOperationsState extends State<CategoryOperations> {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyleName = Theme.of(context).textTheme.body1.copyWith(
-        fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Balsamiq');
+        color: Colors.grey.shade200,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'Balsamiq');
 
     if (allCategory == null) {
       allCategory = List<Category>();
@@ -29,8 +32,13 @@ class _CategoryOperationsState extends State<CategoryOperations> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Kategoriler"),
+        backgroundColor: Colors.grey.shade900,
+        title: Text(
+          "Kategoriler",
+          style: TextStyle(color: Colors.grey.shade200),
+        ),
       ),
       body: ListView.builder(
           itemCount: allCategory.length,
@@ -44,13 +52,13 @@ class _CategoryOperationsState extends State<CategoryOperations> {
               trailing: InkWell(
                 child: Icon(
                   Icons.delete,
-                  color: Colors.orange,
+                  color: Colors.redAccent,
                 ),
                 onTap: () => _deleteCategory(allCategory[index].categoryID),
               ),
               leading: Icon(
-                Icons.import_contacts,
-                color: Colors.blueGrey,
+                Icons.category,
+                color: Colors.orange,
               ),
             );
           }),
@@ -71,36 +79,41 @@ class _CategoryOperationsState extends State<CategoryOperations> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Colors.grey.shade200,
             title: Text("Kategori Sil ",
                 style: TextStyle(
                     fontSize: 18,
-                    color: Colors.blueGrey,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Raleway')),
+                    color: Colors.orange,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Balsamiq')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                    "Kategoriyi sildiğinizde bununla ilgili tüm notlar da silinecektir.\n\nEmin misiniz?"),
+                    "Kategoriyi sildiğinizde, bu kategoride bulunan tüm notlar da silinecektir.\n\nEmin misiniz?"),
                 ButtonBar(
                   children: <Widget>[
                     OutlineButton(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
+                      borderSide: BorderSide(
+                          color: Colors
+                              .grey.shade900 //Theme.of(context).primaryColor
+                          ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                       child: Text(
                         "Vazgeç",
                         style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700),
+                            color: Colors
+                                .redAccent, //Theme.of(context).primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                     OutlineButton(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).accentColor),
+                      borderSide: BorderSide(
+                          color: Colors
+                              .grey.shade900), //Theme.of(context).accentColor),
                       onPressed: () {
                         databaseHelper
                             .deleteCategory(categoryID)
@@ -117,9 +130,10 @@ class _CategoryOperationsState extends State<CategoryOperations> {
                       child: Text(
                         "Sil",
                         style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700),
+                            color:
+                                Colors.orange, //Theme.of(context).accentColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                   ],
@@ -144,12 +158,13 @@ class _CategoryOperationsState extends State<CategoryOperations> {
         context: myContext,
         builder: (context) {
           return SimpleDialog(
+            backgroundColor: Colors.grey.shade300,
             title: Text(
               "Kategori Güncelle",
               style: TextStyle(
                   fontFamily: "Raleway",
-                  fontWeight: FontWeight.w700,
-                  color: Colors.blueGrey),
+                  fontWeight: FontWeight.w400,
+                  color: Colors.orange),
             ),
             children: <Widget>[
               Form(
@@ -176,23 +191,26 @@ class _CategoryOperationsState extends State<CategoryOperations> {
               ButtonBar(
                 children: <Widget>[
                   OutlineButton(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+                    borderSide: BorderSide(
+                        color: Colors
+                            .grey.shade900), //Theme.of(context).primaryColor),
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    color: Colors.orangeAccent,
+                    color: Colors.orange,
                     child: Text(
                       "Vazgeç",
                       style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700),
+                          color: Colors
+                              .redAccent, // Theme.of(context).primaryColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   OutlineButton(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).accentColor),
+                    borderSide: BorderSide(
+                        color: Colors.grey
+                            .shade900), //color: Theme.of(context).accentColor),
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         formKey.currentState.save();
@@ -219,9 +237,9 @@ class _CategoryOperationsState extends State<CategoryOperations> {
                     child: Text(
                       "Kaydet",
                       style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700),
+                          color: Colors.orange, //Theme.of(context).accentColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],

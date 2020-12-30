@@ -27,7 +27,10 @@ class _NoteOperationsState extends State<NoteOperations> {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyleName = Theme.of(context).textTheme.body1.copyWith(
-        fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Balsamiq');
+        color: Colors.grey.shade200,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'Balsamiq');
 
     return FutureBuilder(
       future: veri,
@@ -59,7 +62,8 @@ class _NoteOperationsState extends State<NoteOperations> {
                                 child: Text(
                                   "Kategori",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w400,
                                       fontSize: 14),
                                 ),
                               ),
@@ -68,9 +72,10 @@ class _NoteOperationsState extends State<NoteOperations> {
                                 child: Text(
                                   allNotes[index].categoryName,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                      color: Theme.of(context).accentColor),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18,
+                                      color: Colors.grey
+                                          .shade200), //Theme.of(context).accentColor),
                                 ),
                               ),
                             ],
@@ -83,7 +88,8 @@ class _NoteOperationsState extends State<NoteOperations> {
                                 child: Text(
                                   "Oluşturulma Tarihi",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w400,
                                       fontSize: 14),
                                 ),
                               ),
@@ -93,9 +99,10 @@ class _NoteOperationsState extends State<NoteOperations> {
                                   databaseHelper.dateFormat(
                                       DateTime.parse(allNotes[index].noteDate)),
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                      color: Theme.of(context).accentColor),
+                                      color: Colors.grey.shade200,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18),
+                                  //color: Theme.of(context).accentColor),
                                 ),
                               ),
                             ],
@@ -106,7 +113,8 @@ class _NoteOperationsState extends State<NoteOperations> {
                                 child: Text(
                                   "İçerik",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w400,
                                       fontSize: 14),
                                 ),
                               ),
@@ -116,9 +124,11 @@ class _NoteOperationsState extends State<NoteOperations> {
                                 child: Text(
                                   allNotes[index].noteContent,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                      color: Colors.blueGrey),
+                                      color: Colors.grey.shade200,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20
+                                      //color: Colors.blueGrey
+                                      ),
                                 ),
                               ),
                             ],
@@ -129,28 +139,34 @@ class _NoteOperationsState extends State<NoteOperations> {
                             children: <Widget>[
                               OutlineButton(
                                   borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                      color: Colors.grey
+                                          .shade900 //Theme.of(context).primaryColor
+                                      ),
                                   onPressed: () =>
                                       _deleteNote(allNotes[index].noteID),
                                   child: Text(
                                     "SİL",
                                     style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
+                                        color: Colors
+                                            .redAccent, //Theme.of(context).primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
                                   )),
                               OutlineButton(
                                   borderSide: BorderSide(
-                                      color: Theme.of(context).accentColor),
+                                      color: Colors.grey
+                                          .shade900 // Theme.of(context).accentColor
+                                      ),
                                   onPressed: () {
                                     _goContentPage(context, allNotes[index]);
                                   },
                                   child: Text(
                                     "GÜNCELLE",
                                     style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
+                                        color: Colors
+                                            .orange, //Theme.of(context).accentColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
                                   )),
                             ],
                           ),
@@ -184,32 +200,28 @@ class _NoteOperationsState extends State<NoteOperations> {
             radius: 26,
             child: Text(
               "AZ",
-              style: TextStyle(
-                  color: Colors.deepOrange.shade200,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.orange, fontSize: 14),
             ),
-            backgroundColor: Colors.blueGrey.shade200);
+            backgroundColor: Colors.grey.shade900);
         break;
       case 1:
         return CircleAvatar(
             radius: 26,
             child: Text(
               "ORTA",
-              style: TextStyle(
-                  color: Colors.deepOrange.shade400,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.orange, fontSize: 14),
             ),
-            backgroundColor: Colors.blueGrey.shade200);
+            backgroundColor: Colors.grey.shade900);
       case 2:
         return CircleAvatar(
             radius: 26,
             child: Text(
-              "ACIL",
+              "ACİL",
               style: TextStyle(
-                  color: Colors.deepOrange.shade700,
+                  color: Colors.deepOrangeAccent.shade400,
                   fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Colors.blueGrey.shade200);
+            backgroundColor: Colors.grey.shade900);
         break;
     }
   }
@@ -218,8 +230,11 @@ class _NoteOperationsState extends State<NoteOperations> {
     databaseHelper.deleteNote(noteID).then((deletedID) {
       //silinen ID
       if (deletedID != 0) {
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text("Not Silindi")));
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "Not Silindi",
+          style: TextStyle(color: Colors.grey.shade200),
+        )));
 
         setState(() {});
       }

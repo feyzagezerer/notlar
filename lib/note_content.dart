@@ -42,9 +42,9 @@ class _NoteContentState extends State<NoteContent> {
       } else {
         categoryID = 1;
         chosenPriority = 0;
-        chosenCategory = allCategories[1];
+        chosenCategory = allCategories[0];
         debugPrint(
-            "secilen kategoriye deger atandı" + chosenCategory.categoryName);
+            "seçilen kategoriye değer atandı" + chosenCategory.categoryName);
       }
 
       setState(() {});
@@ -55,13 +55,15 @@ class _NoteContentState extends State<NoteContent> {
   Widget build(BuildContext context) {
     var tag = TextStyle(
         //etiket
-        fontWeight: FontWeight.w700,
-        fontSize: 20,
-        color: Colors.blueGrey);
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
+        color: Colors.orange);
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        backgroundColor: Colors.grey.shade900,
         title: Text(widget.name),
       ),
       body: allCategories.length <= 0
@@ -78,7 +80,7 @@ class _NoteContentState extends State<NoteContent> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
-                            "Kategori :",
+                            "Kategori: ",
                             style: tag,
                           ),
                         ),
@@ -88,7 +90,8 @@ class _NoteContentState extends State<NoteContent> {
                           margin: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.grey
+                                      .shade900, //Theme.of(context).primaryColor,
                                   width: 1),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
@@ -96,7 +99,11 @@ class _NoteContentState extends State<NoteContent> {
                               child: DropdownButton<Category>(
                                   items:
                                       createCategoryItems(), //kategori itemleri oluştur
-                                  hint: Text("Kategori Seç"),
+                                  hint: Text(
+                                    "Kategori Seç",
+                                    style:
+                                        TextStyle(color: Colors.grey.shade200),
+                                  ),
                                   value: chosenCategory,
                                   onChanged: (Category userSelectedCategory) {
                                     //kullanıcının seçtiği kategori
@@ -143,7 +150,7 @@ class _NoteContentState extends State<NoteContent> {
                         },
                         maxLines: 4,
                         decoration: InputDecoration(
-                          hintText: "Not içeriğini giriniz",
+                          hintText: "Not içeriğini giriniz.",
                           labelText: "İçerik",
                           border: OutlineInputBorder(),
                         ),
@@ -154,7 +161,7 @@ class _NoteContentState extends State<NoteContent> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
-                            "Öncelik :",
+                            "Öncelik: ",
                             style: tag,
                           ),
                         ),
@@ -164,7 +171,8 @@ class _NoteContentState extends State<NoteContent> {
                           margin: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Colors.grey
+                                      .shade900, //Theme.of(context).primaryColor,
                                   width: 1),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
@@ -174,7 +182,8 @@ class _NoteContentState extends State<NoteContent> {
                                     return DropdownMenuItem<int>(
                                       child: Text(
                                         priority,
-                                        style: TextStyle(fontSize: 16),
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.orange),
                                       ),
                                       value: _priority.indexOf(priority),
                                     );
@@ -194,20 +203,23 @@ class _NoteContentState extends State<NoteContent> {
                       children: <Widget>[
                         OutlineButton(
                             borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor),
+                                color: Colors.grey
+                                    .shade900), // Theme.of(context).primaryColor),
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             child: Text(
                               "VAZGEÇ",
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
+                                  color: Colors
+                                      .redAccent, //Theme.of(context).primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
                             )),
                         OutlineButton(
                             borderSide: BorderSide(
-                                color: Theme.of(context).accentColor),
+                                color: Colors.grey
+                                    .shade900), // Theme.of(context).accentColor),
                             onPressed: () {
                               if (formKey.currentState.validate()) {
                                 formKey.currentState.save();
@@ -248,9 +260,10 @@ class _NoteContentState extends State<NoteContent> {
                             child: Text(
                               "KAYDET",
                               style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
+                                  color: Colors
+                                      .orange, //Theme.of(context).accentColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
                             )),
                       ],
                     ),
@@ -267,7 +280,7 @@ class _NoteContentState extends State<NoteContent> {
         value: mycategory,
         child: Text(
           mycategory.categoryName,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, color: Colors.orange),
         ),
       );
     }).toList();
