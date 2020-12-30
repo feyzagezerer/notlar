@@ -64,7 +64,7 @@ class _NoteContentState extends State<NoteContent> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
-        title: Text(widget.name),
+        title: Text("Not Güncelleme"),
       ),
       body: allCategories.length <= 0
           ? Center(
