@@ -234,7 +234,7 @@ class _NoteOperationsState extends State<NoteOperations> {
       if (deletedID != 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(
-          "Not Silindi",
+          "İşlem Tamamlandı",
           style: TextStyle(color: Colors.grey.shade200),
         )));
         setState(() {});
