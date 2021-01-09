@@ -5,9 +5,16 @@ import 'package:notlar/note_content.dart';
 import 'package:notlar/note_operations.dart';
 import 'package:notlar/utils/database_helper.dart';
 
-class NoteList extends StatelessWidget {
+class NoteList extends StatefulWidget {
+  @override
+  _NoteListState createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   var _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +75,9 @@ class NoteList extends StatelessWidget {
             heroTag: "NotEkle",
             tooltip: "Not Ekle",
 
-            onPressed: () => _goContentPage(context), //içerik sayfasına git
+            onPressed: () {
+              _goContentPage(context);
+            }, //içerik sayfasına git
             child: Icon(Icons.playlist_add_rounded,
                 color: Colors.black, size: 40.0),
             backgroundColor: Colors.red,
@@ -180,9 +189,9 @@ class NoteList extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NoteContent(
+            builder: (BuildContext context) => NoteContent(
                   name: "Yeni Not",
-                )));
+                ))).then((getNote) => setState(() {}));
   }
 
   void _goCategoryPage(BuildContext context) {

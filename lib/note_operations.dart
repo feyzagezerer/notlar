@@ -11,17 +11,18 @@ class NoteOperations extends StatefulWidget {
 }
 
 class _NoteOperationsState extends State<NoteOperations> {
+  DatabaseHelper databaseHelper;
   List<Note> allNotes;
 
-  DatabaseHelper databaseHelper;
   Future<List<Note>> veri;
+
   @override
   void initState() {
     super.initState();
     allNotes = List<Note>();
 
     databaseHelper = DatabaseHelper();
-    veri = databaseHelper.getNoteList();
+    //DENEMEICIN// YAPTIM veri = databaseHelper.getNoteList();
   }
 
   @override
@@ -33,14 +34,14 @@ class _NoteOperationsState extends State<NoteOperations> {
         fontFamily: 'Balsamiq');
 
     return FutureBuilder(
-      future: veri,
-      builder: (context, AsyncSnapshot<List<Note>> snapShot) {
+      future: databaseHelper.getNoteList(),
+      builder: (BuildContext context, AsyncSnapshot<List<Note>> snapShot) {
         if (snapShot.connectionState == ConnectionState.done) {
           allNotes = snapShot.data;
           sleep(Duration(milliseconds: 500));
           return ListView.builder(
               itemCount: allNotes.length,
-              itemBuilder: (BuildContext context, index) {
+              itemBuilder: (context, index) {
                 return ExpansionTile(
                   leading: _assignPriorityIcon(
                       allNotes[index].notePriority), //öncelik iconu ata
@@ -142,8 +143,9 @@ class _NoteOperationsState extends State<NoteOperations> {
                                       color: Colors.grey
                                           .shade900 //Theme.of(context).primaryColor
                                       ),
-                                  onPressed: () =>
-                                      _deleteNote(allNotes[index].noteID),
+                                  onPressed: () {
+                                    _deleteNote(allNotes[index].noteID);
+                                  },
                                   child: Text(
                                     "SİL",
                                     style: TextStyle(
@@ -188,9 +190,9 @@ class _NoteOperationsState extends State<NoteOperations> {
         context,
         MaterialPageRoute(
             builder: (context) => NoteContent(
-                  name: "noteToBeEdited",
+                  name: "Notu Düzenle",
                   noteToBeEdited: note,
-                )));
+                ))).then((getNote) => setState(() {}));
   }
 
   _assignPriorityIcon(int notePriority) {
@@ -235,7 +237,6 @@ class _NoteOperationsState extends State<NoteOperations> {
           "Not Silindi",
           style: TextStyle(color: Colors.grey.shade200),
         )));
-
         setState(() {});
       }
     });
