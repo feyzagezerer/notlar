@@ -40,7 +40,7 @@ class _NoteContentState extends State<NoteContent> {
         categoryID = widget.noteToBeEdited.categoryID;
         chosenPriority = widget.noteToBeEdited.notePriority;
       } else {
-        categoryID = 1;
+        categoryID = 0;
         chosenPriority = 0;
         chosenCategory = allCategories[0];
         debugPrint(
