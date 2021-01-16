@@ -40,11 +40,11 @@ class _NoteContentState extends State<NoteContent> {
         categoryID = widget.noteToBeEdited.categoryID;
         chosenPriority = widget.noteToBeEdited.notePriority;
       } else {
-        categoryID = 0;
+        categoryID = 1;
         chosenPriority = 0;
         chosenCategory = allCategories[0];
         debugPrint(
-            "seçilen kategoriye değer atandı" + chosenCategory.categoryName);
+            "seçilen kategoriye değer atandı " + chosenCategory.categoryName);
       }
 
       setState(() {});
