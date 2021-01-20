@@ -11,7 +11,7 @@ class NoteOperations extends StatefulWidget {
 }
 
 class _NoteOperationsState extends State<NoteOperations> {
-  DatabaseHelper databaseHelper;
+  DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> allNotes;
 
   Future<List<Note>> veri;
@@ -20,8 +20,8 @@ class _NoteOperationsState extends State<NoteOperations> {
   void initState() {
     super.initState();
     allNotes = List<Note>();
-
     databaseHelper = DatabaseHelper();
+
     //DENEMEICIN// YAPTIM veri = databaseHelper.getNoteList();
   }
 

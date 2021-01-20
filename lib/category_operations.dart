@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notlar/models/category.dart';
+import 'package:notlar/models/note.dart';
 import 'package:notlar/utils/database_helper.dart';
 
 class CategoryOperations extends StatefulWidget {
@@ -9,6 +10,7 @@ class CategoryOperations extends StatefulWidget {
 
 class _CategoryOperationsState extends State<CategoryOperations> {
   List<Category> allCategory;
+  List<Note> allNotes;
   DatabaseHelper databaseHelper;
 
   @override
@@ -40,29 +42,62 @@ class _CategoryOperationsState extends State<CategoryOperations> {
           style: TextStyle(color: Colors.grey.shade200),
         ),
       ),
-      body: ListView.builder(
-          itemCount: allCategory.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              onTap: () => _updateCategory(allCategory[index], context),
-              title: Text(
-                allCategory[index].categoryName,
-                style: textStyleName,
+      body: allCategory.length <= 0
+          ? Center(
+              child: Text(
+                "Şu anda hiç kategori bulunmamaktadır..",
+                style: TextStyle(color: Colors.white),
               ),
-              trailing: InkWell(
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.redAccent,
-                ),
-                onTap: () => _deleteCategory(allCategory[index].categoryID),
-              ),
-              leading: Icon(
-                Icons.category,
-                color: Colors.orange,
-              ),
-            );
-          }),
+            )
+          : ListView.builder(
+              itemCount: allCategory.length,
+              padding: EdgeInsets.all(4),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                  onTap: () => _notesOfCategory(allCategory[index].categoryID),
+                  title: Text(
+                    allCategory[index].categoryName,
+                    style: textStyleName,
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        child: Icon(
+                          Icons.create,
+                          color: Colors.redAccent,
+                          size: 20,
+                        ),
+                        onTap: () =>
+                            _updateCategory(allCategory[index], context),
+                      ),
+                      InkWell(
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.redAccent,
+                          size: 20,
+                        ),
+                        onTap: () =>
+                            _deleteCategory(allCategory[index].categoryID),
+                      ),
+                    ],
+                  ),
+                  leading: Icon(
+                    Icons.category,
+                    color: Colors.orange,
+                  ),
+                );
+              }),
     );
+  }
+
+  _notesOfCategory(int categoryID) async {
+    /* var db = await databaseHelper;
+    var result = await db.rawQuery(
+        'select * from notes where category.categoryID = notes.categoryID ;');
+
+    return result;*/
   }
 
   void updateCategoryList() {
@@ -162,7 +197,7 @@ class _CategoryOperationsState extends State<CategoryOperations> {
             title: Text(
               "Kategori Güncelle",
               style: TextStyle(
-                  fontFamily: "Raleway",
+                  fontFamily: "Balsamiq",
                   fontWeight: FontWeight.w400,
                   color: Colors.orange),
             ),
@@ -228,6 +263,7 @@ class _CategoryOperationsState extends State<CategoryOperations> {
                               ),
                             );
                             updateCategoryList();
+
                             Navigator.of(context).pop();
                           }
                         });

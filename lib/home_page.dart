@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notlar/category_operations.dart';
 import 'package:notlar/models/category.dart';
+import 'package:notlar/models/note.dart';
 import 'package:notlar/note_content.dart';
 import 'package:notlar/note_operations.dart';
 import 'package:notlar/utils/database_helper.dart';
@@ -14,7 +15,15 @@ class _NoteListState extends State<NoteList> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<Note> allNotes = List<Note>();
+
   @override
+  void initState() {
+    super.initState();
+    List<Note> allNotes = List<Note>();
+    DatabaseHelper databaseHelper = DatabaseHelper();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +94,7 @@ class _NoteListState extends State<NoteList> {
         ],
       ),
       body: NoteOperations(),
+      //_control(context),
     );
   }
 

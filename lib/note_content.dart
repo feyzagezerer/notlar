@@ -40,13 +40,12 @@ class _NoteContentState extends State<NoteContent> {
         categoryID = widget.noteToBeEdited.categoryID;
         chosenPriority = widget.noteToBeEdited.notePriority;
       } else {
-        categoryID = 1;
+        categoryID = allCategories[0].categoryID;
         chosenPriority = 0;
         chosenCategory = allCategories[0];
         debugPrint(
             "seçilen kategoriye değer atandı " + chosenCategory.categoryName);
       }
-
       setState(() {});
     });
   }
@@ -68,7 +67,10 @@ class _NoteContentState extends State<NoteContent> {
       ),
       body: allCategories.length <= 0
           ? Center(
-              child: CircularProgressIndicator(),
+              child: Text(
+                "Not eklemeden önce kategori eklemeniz gerekmektedir.",
+                style: TextStyle(color: Colors.black),
+              ),
             )
           : Container(
               child: Form(
@@ -97,24 +99,22 @@ class _NoteContentState extends State<NoteContent> {
                                   BorderRadius.all(Radius.circular(10))),
                           child: DropdownButtonHideUnderline(
                               child: DropdownButton<Category>(
-                                  items:
-                                      createCategoryItems(), //kategori itemleri oluştur
-                                  hint: Text(
-                                    "Kategori Seç",
-                                    style:
-                                        TextStyle(color: Colors.grey.shade200),
-                                  ),
-                                  value: chosenCategory,
-                                  onChanged: (Category userSelectedCategory) {
-                                    //kullanıcının seçtiği kategori
-                                    debugPrint("Seçilen kategori:" +
-                                        userSelectedCategory.toString());
-                                    setState(() {
-                                      chosenCategory = userSelectedCategory;
-                                      categoryID =
-                                          userSelectedCategory.categoryID;
-                                    });
-                                  })),
+                            items:
+                                createCategoryItems(), //kategori itemleri oluştur
+                            hint: Text(
+                              "Kategori Seç",
+                              style: TextStyle(color: Colors.grey.shade200),
+                            ),
+                            value: chosenCategory,
+                            onChanged: (Category userSelectedCategory) {
+                              //kullanıcının seçtiği kategori
+                              //   debugPrint("Seçilen kategori:" + userSelectedCategory.toString());
+                              setState(() {
+                                chosenCategory = userSelectedCategory;
+                                categoryID = userSelectedCategory.categoryID;
+                              });
+                            },
+                          )),
                         ),
                       ],
                     ),
