@@ -45,8 +45,12 @@ class _CategoryOperationsState extends State<CategoryOperations> {
       body: allCategory.length <= 0
           ? Center(
               child: Text(
-                "Şu anda hiç kategori bulunmamaktadır..",
-                style: TextStyle(color: Colors.white),
+                "Şu anda hiç kategori bulunmamaktadır.",
+                style: TextStyle(
+                  color: Colors.grey.shade200,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
               ),
             )
           : ListView.builder(

@@ -55,6 +55,7 @@ class _NoteContentState extends State<NoteContent> {
     var tag = TextStyle(
         //etiket
         fontWeight: FontWeight.w400,
+        fontFamily: 'Balsamiq',
         fontSize: 18,
         color: Colors.orange);
 
@@ -69,7 +70,11 @@ class _NoteContentState extends State<NoteContent> {
           ? Center(
               child: Text(
                 "Not eklemeden önce kategori eklemeniz gerekmektedir.",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
               ),
             )
           : Container(

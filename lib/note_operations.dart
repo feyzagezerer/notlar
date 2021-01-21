@@ -22,7 +22,7 @@ class _NoteOperationsState extends State<NoteOperations> {
     allNotes = List<Note>();
     databaseHelper = DatabaseHelper();
 
-    //DENEMEICIN// YAPTIM veri = databaseHelper.getNoteList();
+    //DENEME// YAPTIM veri = databaseHelper.getNoteList();
   }
 
   @override
@@ -39,145 +39,158 @@ class _NoteOperationsState extends State<NoteOperations> {
         if (snapShot.connectionState == ConnectionState.done) {
           allNotes = snapShot.data;
           sleep(Duration(milliseconds: 500));
-          return ListView.builder(
-              itemCount: allNotes.length,
-              itemBuilder: (context, index) {
-                return ExpansionTile(
-                  leading: _assignPriorityIcon(
-                      allNotes[index].notePriority), //öncelik iconu ata
-                  title: Text(
-                    allNotes[index].noteName,
-                    style: textStyleName,
-                  ),
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Kategori",
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  allNotes[index].categoryName,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18,
-                                      color: Colors.grey
-                                          .shade200), //Theme.of(context).accentColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Oluşturulma Tarihi",
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  databaseHelper.dateFormat(
-                                      DateTime.parse(allNotes[index].noteDate)),
-                                  style: TextStyle(
-                                      color: Colors.grey.shade200,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18),
-                                  //color: Theme.of(context).accentColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                child: Text(
-                                  "İçerik",
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 14),
-                                child: Text(
-                                  allNotes[index].noteContent,
-                                  style: TextStyle(
-                                      color: Colors.grey.shade200,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 20
-                                      //color: Colors.blueGrey
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          ButtonBar(
-                            alignment: MainAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              OutlineButton(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey
-                                          .shade900 //Theme.of(context).primaryColor
-                                      ),
-                                  onPressed: () {
-                                    _deleteNote(allNotes[index].noteID);
-                                  },
-                                  child: Text(
-                                    "SİL",
-                                    style: TextStyle(
-                                        color: Colors
-                                            .redAccent, //Theme.of(context).primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  )),
-                              OutlineButton(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey
-                                          .shade900 // Theme.of(context).accentColor
-                                      ),
-                                  onPressed: () {
-                                    _goContentPage(context, allNotes[index]);
-                                  },
-                                  child: Text(
-                                    "GÜNCELLE",
-                                    style: TextStyle(
-                                        color: Colors
-                                            .orange, //Theme.of(context).accentColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  )),
-                            ],
-                          ),
-                        ],
-                      ),
+          if (allNotes.isEmpty) {
+            return Center(
+              child: Text(
+                "Şu anda hiç not bulunmamaktadır. \nAşağıda, sağ taraftaki butondan not oluşturabilirsiniz.",
+                style: TextStyle(
+                  color: Colors.grey.shade200,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: allNotes.length,
+                itemBuilder: (context, index) {
+                  return ExpansionTile(
+                    leading: _assignPriorityIcon(
+                        allNotes[index].notePriority), //öncelik iconu ata
+                    title: Text(
+                      allNotes[index].noteName,
+                      style: textStyleName,
                     ),
-                  ],
-                );
-              });
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Kategori",
+                                    style: TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    allNotes[index].categoryName,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18,
+                                        color: Colors.grey
+                                            .shade200), //Theme.of(context).accentColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Oluşturulma Tarihi",
+                                    style: TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    databaseHelper.dateFormat(DateTime.parse(
+                                        allNotes[index].noteDate)),
+                                    style: TextStyle(
+                                        color: Colors.grey.shade200,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18),
+                                    //color: Theme.of(context).accentColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    "İçerik",
+                                    style: TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 14),
+                                  child: Text(
+                                    allNotes[index].noteContent,
+                                    style: TextStyle(
+                                        color: Colors.grey.shade200,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 20
+                                        //color: Colors.blueGrey
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ButtonBar(
+                              alignment: MainAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                OutlineButton(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey
+                                            .shade900 //Theme.of(context).primaryColor
+                                        ),
+                                    onPressed: () {
+                                      _deleteNote(allNotes[index].noteID);
+                                    },
+                                    child: Text(
+                                      "SİL",
+                                      style: TextStyle(
+                                          color: Colors
+                                              .redAccent, //Theme.of(context).primaryColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                                OutlineButton(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey
+                                            .shade900 // Theme.of(context).accentColor
+                                        ),
+                                    onPressed: () {
+                                      _goContentPage(context, allNotes[index]);
+                                    },
+                                    child: Text(
+                                      "GÜNCELLE",
+                                      style: TextStyle(
+                                          color: Colors
+                                              .orange, //Theme.of(context).accentColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          }
         } else {
           return Center(child: Text("Yükleniyor..."));
         }
